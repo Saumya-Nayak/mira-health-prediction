@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MIRA - Add Patient</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #0a6e5c;
+        --accent: #00c9a7;
+        --dark: #0d1b2a;
+        --light-bg: #f4f7f6;
+        --border: #dde8e5;
+        --text-muted: #6b7e78;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--light-bg);
+        color: var(--dark);
+        min-height: 100vh;
+      }
+
+      nav {
+        background: var(--dark);
+        padding: 1rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      nav .brand {
+        font-family: "Syne", sans-serif;
+        font-size: 1.6rem;
+        color: var(--accent);
+        letter-spacing: 2px;
+      }
+
+      nav .brand span {
+        color: #ffffff;
+        font-size: 0.85rem;
+        display: block;
+        letter-spacing: 3px;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 300;
+      }
+
+      .main-container {
+        max-width: 680px;
+        margin: 2.5rem auto;
+        padding: 0 1.5rem;
+      }
+
+      .back-link {
+        display: inline-block;
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        font-weight: 500;
+      }
+
+      .back-link:hover {
+        color: var(--accent);
+      }
+
+      .form-card {
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 2.2rem;
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+      }
+
+      .form-card h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.6rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .form-card p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+      }
+
+      .section-label {
+        font-family: "Syne", sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin: 1.5rem 0 1rem;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 0.4rem;
+      }
+
+      .alert-box {
+        padding: 0.85rem 1.2rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        font-size: 0.92rem;
+      }
+
+      .alert-danger {
+        background: #fde8e8;
+        color: #8b1a1a;
+        border-left: 4px solid #e05555;
+      }
+
+      label {
+        display: block;
+        font-size: 0.88rem;
+        font-weight: 500;
+        margin-bottom: 0.35rem;
+        color: var(--dark);
+      }
+
+      input {
+        width: 100%;
+        padding: 0.65rem 1rem;
+        border: 1.5px solid var(--border);
+        border-radius: 8px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.92rem;
+        color: var(--dark);
+        background: #fafcfb;
+        transition: border 0.2s;
+        margin-bottom: 1.1rem;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: var(--accent);
+        background: #fff;
+      }
+
+      .row-fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .row-fields .field-group {
+        margin: 0;
+      }
+      .row-fields input {
+        margin-bottom: 0;
+      }
+
+      .hint {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-top: -0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .btn-submit {
+        width: 100%;
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.8rem;
+        border-radius: 8px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 1rem;
+        transition: background 0.2s;
+      }
+
+      .btn-submit:hover {
+        background: var(--accent);
+      }
+
+      .ai-note {
+        background: #eaf4f1;
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        font-size: 0.85rem;
+        color: var(--primary);
+        margin-top: 1rem;
+        border-left: 3px solid var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="brand">
+        MIRA
+        <span>Medical Intelligence Robotic Automation</span>
+      </div>
+    </nav>
+
+    <div class="main-container">
+      <a href="{{ url_for('index') }}" class="back-link">← Back to Records</a>
+
+      <div class="form-card">
+        <h2>Add New Patient</h2>
+        <p>
+          Fill in patient details and blood test results to generate an AI
+          health assessment.
+        </p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %}
+        <div class="alert-box alert-{{ category }}">{{ message }}</div>
+        {% endfor %} {% endif %} {% endwith %}
+
+        <form method="POST" action="{{ url_for('add_patient') }}">
+          <div class="section-label">Personal Information</div>
+
+          <label for="full_name">Full Name</label>
+          <input
+            type="text"
+            id="full_name"
+            name="full_name"
+            placeholder="e.g. Saumya Nayak"
+            required
+          />
+
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" name="dob" required />
+
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="e.g. abc@example.com"
+            required
+          />
+
+          <div class="section-label">Blood Test Results</div>
+
+          <div class="row-fields">
+            <div class="field-group">
+              <label for="glucose">Glucose (mg/dL)</label>
+              <input
+                type="number"
+                step="0.01"
+                id="glucose"
+                name="glucose"
+                placeholder="e.g. 95"
+                required
+              />
+            </div>
+            <div class="field-group">
+              <label for="haemoglobin">Haemoglobin (g/dL)</label>
+              <input
+                type="number"
+                step="0.01"
+                id="haemoglobin"
+                name="haemoglobin"
+                placeholder="e.g. 13.5"
+                required
+              />
+            </div>
+            <div class="field-group">
+              <label for="cholesterol">Cholesterol (mg/dL)</label>
+              <input
+                type="number"
+                step="0.01"
+                id="cholesterol"
+                name="cholesterol"
+                placeholder="e.g. 180"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="ai-note">
+            AI health remarks will be automatically generated after submission
+            using Gemini AI.
+          </div>
+
+          <button type="submit" class="btn-submit">
+            Save & Generate AI Remarks
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

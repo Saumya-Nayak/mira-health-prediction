@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MIRA - Health Prediction</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #0a6e5c;
+        --accent: #00c9a7;
+        --dark: #0d1b2a;
+        --light-bg: #f4f7f6;
+        --border: #dde8e5;
+        --text-muted: #6b7e78;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--light-bg);
+        color: var(--dark);
+        min-height: 100vh;
+      }
+
+      nav {
+        background: var(--dark);
+        padding: 1rem 2rem;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .brand {
+        font-family: "Syne", sans-serif;
+        font-size: 1.6rem;
+        color: var(--accent);
+        letter-spacing: 2px;
+      }
+
+      .brand span {
+        color: #ffffff;
+        font-size: 0.82rem;
+        display: block;
+        letter-spacing: 3px;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 300;
+      }
+
+      .main-container {
+        max-width: 1200px;
+        margin: 2.5rem auto;
+        padding: 0 1.5rem;
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .page-header h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.8rem;
+      }
+
+      .btn-add {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.65rem 1.4rem;
+        border-radius: 8px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .btn-add:hover {
+        background: var(--accent);
+        color: white;
+      }
+
+      .alert-box {
+        padding: 0.85rem 1.2rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        font-size: 0.92rem;
+      }
+
+      .alert-success {
+        background: #d4f5ee;
+        color: #0a5e4e;
+        border-left: 4px solid var(--accent);
+      }
+      .alert-danger {
+        background: #fde8e8;
+        color: #8b1a1a;
+        border-left: 4px solid #e05555;
+      }
+
+      /* ── Patient Cards ── */
+      .cards-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .patient-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border);
+        overflow: hidden;
+        transition: box-shadow 0.2s;
+      }
+
+      .patient-card:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.09);
+      }
+
+      /* Top row: name + actions */
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.4rem 0.6rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .card-name {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        color: var(--dark);
+      }
+
+      .card-sub {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      .action-btns {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .btn-edit {
+        display: inline-block;
+        background: #e8f4f1;
+        color: var(--primary);
+        border: 1.5px solid var(--primary);
+        padding: 0.35rem 1rem;
+        border-radius: 6px;
+        font-size: 0.83rem;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .btn-edit:hover {
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .btn-delete {
+        background: #fde8e8;
+        color: #c0392b;
+        border: 1.5px solid #c0392b;
+        padding: 0.35rem 1rem;
+        border-radius: 6px;
+        font-size: 0.83rem;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+        font-family: "DM Sans", sans-serif;
+      }
+
+      .btn-delete:hover {
+        background: #c0392b;
+        color: #fff;
+      }
+
+      /* Middle row: blood values */
+      .card-values {
+        display: flex;
+        gap: 1.5rem;
+        padding: 0.8rem 1.4rem;
+        flex-wrap: wrap;
+        border-bottom: 1px solid var(--border);
+        background: #fafcfb;
+      }
+
+      .val-item {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .val-label {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-muted);
+        font-weight: 600;
+      }
+
+      .val-number {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      /* Bottom row: AI remarks */
+      .card-remarks {
+        padding: 0.8rem 1.4rem;
+      }
+
+      .remarks-label {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-muted);
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+      }
+
+      .remarks-text {
+        font-size: 0.88rem;
+        color: #3a5250;
+        line-height: 1.6;
+        background: #eaf4f1;
+        border-left: 3px solid var(--accent);
+        padding: 0.6rem 0.9rem;
+        border-radius: 0 6px 6px 0;
+      }
+
+      /* Empty state */
+      .empty-state {
+        background: #fff;
+        border-radius: 12px;
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--text-muted);
+        border: 1px solid var(--border);
+      }
+
+      .empty-state h3 {
+        font-family: "Syne", sans-serif;
+        margin-bottom: 0.5rem;
+        color: var(--dark);
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem;
+        color: var(--text-muted);
+        font-size: 0.82rem;
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="brand">
+        MIRA
+        <span>Medical Intelligence Robotic Automation</span>
+      </div>
+    </nav>
+
+    <div class="main-container">
+      <div class="page-header">
+        <h2>Patient Records</h2>
+        <a href="{{ url_for('add_patient') }}" class="btn-add">+ Add Patient</a>
+      </div>
+
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="alert-box alert-{{ category }}">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %} {% if patients %}
+      <div class="cards-grid">
+        {% for patient in patients %}
+        <div class="patient-card">
+          <div class="card-header">
+            <div>
+              <div class="card-name">
+                {{ loop.index }}. {{ patient.full_name }}
+              </div>
+              <div class="card-sub">
+                {{ patient.email }} &nbsp;|&nbsp; DOB: {{ patient.dob }}
+              </div>
+            </div>
+            <div class="action-btns">
+              <a
+                href="{{ url_for('edit_patient', id=patient.id) }}"
+                class="btn-edit"
+                >Edit</a
+              >
+              <form
+                method="POST"
+                action="{{ url_for('delete_patient', id=patient.id) }}"
+                onsubmit="return confirm('Delete this record?')"
+                style="margin: 0"
+              >
+                <button type="submit" class="btn-delete">Delete</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="card-values">
+            <div class="val-item">
+              <span class="val-label">Glucose</span>
+              <span class="val-number">{{ patient.glucose }} mg/dL</span>
+            </div>
+            <div class="val-item">
+              <span class="val-label">Haemoglobin</span>
+              <span class="val-number">{{ patient.haemoglobin }} g/dL</span>
+            </div>
+            <div class="val-item">
+              <span class="val-label">Cholesterol</span>
+              <span class="val-number">{{ patient.cholesterol }} mg/dL</span>
+            </div>
+          </div>
+
+          <div class="card-remarks">
+            <div class="remarks-label">AI Health Remarks</div>
+            <div class="remarks-text">{{ patient.remarks }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      {% else %}
+      <div class="empty-state">
+        <h3>No patient records yet</h3>
+        <p>Click "+ Add Patient" to create your first record.</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <footer>MIRA &copy; 2025 &mdash; Health Prediction Platform</footer>
+  </body>
+</html>
